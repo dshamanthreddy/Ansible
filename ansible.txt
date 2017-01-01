@@ -1,0 +1,62 @@
+Enable EPL release:
+
+http://fedoraproject.org/wiki/EPEL
+
+rpm -i <EPL-Release>
+rpm -i https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+rpm -i https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm
+yum install ansible
+
+
+python error:
+
+yum install gcc
+wget https://www.python.org/ftp/python/2.6.7/Python-2.6.7.tgz
+tar -zxvf Python-2.6.7.tgz
+cd Python-2.6.7.tgz
+./configure
+
+
+----HOSTs------
+
+/etc/ansible/hosts
+
+mail.example.com
+
+[webservers]
+foo.example.com
+bar.example.com
+
+[dbservers]
+one.example.com
+two.example.com
+three.example.com
+
+----End Of HOSTs------
+
+
+ansible all  -m yum -a "name=vim state=present"
+ansible all -m ping
+
+
+
+
+example playbook
+
+---
+- hosts: all
+  vars:
+    http_port: 80
+    max_clients: 200
+  remote_user: root
+  tasks:
+  - name: install httpd
+    yum : name=httpd state=present
+  - name: copy a file
+    template: src=/etc/httpd.j2 dest=/etc/httpd.conf
+  - name: start httpd server
+    service: name=httpd state=started
+~
+
+	  
+	  
